@@ -3,7 +3,7 @@
 
 using namespace std;
 
-string rleEncode(const string& data){
+string rleCompress(const string& data){
     string encoded;
     int count = 1;
     for(size_t i = 1; i < data.size(); ++i){
@@ -18,7 +18,7 @@ string rleEncode(const string& data){
     return encoded;
 }
 
-string rleDecode(const string& data){
+string rleDecompress(const string& data){
     string decoded;
     for(size_t i = 0; i < data.size(); i += 2){
         int count = data[i + 1] - '0';
@@ -29,11 +29,3 @@ string rleDecode(const string& data){
     return decoded;
 }
 
-int main(){
-    string data = "aaaabbbbbbccccc";
-    string output = rleEncode(data);
-    string decoded = rleDecode(output);
-    cout << output << std::endl;
-    cout << decoded << std::endl;
-    return 0;
-}
