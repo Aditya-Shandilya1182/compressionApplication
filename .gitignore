@@ -1,3 +1,6 @@
 .vscode
 dictionary_coder.exe
 RLE_compressor.exe
+compressed.txt
+decompressed.txt
+input.txt

@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -28,4 +29,52 @@ string rleDecompress(const string& data){
     }
     return decoded;
 }
+
+void compressFileRLE(const string& inputFile, const string& outputFile){
+    
+    ifstream inFile(inputFile);
+    if(!inFile){
+        cerr << "Error: unable to open input file" << endl;
+        return;
+    }
+
+    ofstream outFile(outputFile);
+    if(!outFile){
+        cerr << "Error: unable to open output file" << endl;
+        return;
+    }
+
+    string content((istreambuf_iterator<char>(inFile)), istreambuf_iterator<char>());
+    string compressed = rleCompress(content);
+    outFile << compressed;
+
+    inFile.close();
+    outFile.close();
+
+    cout << "File compressed successfully." << endl;
+}
+
+void decompressFileRLE(const string& inputFile, const string& outputFile){
+    ifstream inFile(inputFile);
+    if(!inFile){
+        cerr << "Error: unable to open input file" << endl;
+        return;
+    }
+
+    ofstream outFile(outputFile);
+    if(!outFile){
+        cerr << "Error: unable to open output file" << endl;
+        return;
+    }
+
+    string content((istreambuf_iterator<char>(inFile)), istreambuf_iterator<char>());
+    string decompressed = rleDecompress(content);
+    outFile << decompressed;
+
+    inFile.close();
+    outFile.close();
+
+    cout << "File decompressed successfully." << endl;
+}
+
 
