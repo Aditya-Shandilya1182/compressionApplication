@@ -39,7 +39,7 @@ std::vector<int> encodingLZW(const std::string& input) {
 
 std::string decodingLZW(const std::vector<int>& input) {
     if (input.empty()) {
-        return ""; // Return an empty string if the input vector is empty
+        return ""; 
     }
 
     std::unordered_map<int, std::string> table;
@@ -77,7 +77,7 @@ void compressFileLZW(const std::string& inputFile, const std::string& outputFile
     std::ofstream fout(outputFile, std::ios::binary);
 
     if (!fin || !fout) {
-        std::cerr << "Error: Failed to inputen files." << std::endl;
+        std::cerr << "Error: Failed to access files." << std::endl;
         return;
     }
 
@@ -104,11 +104,11 @@ void decompressFileLZW(const std::string& inputFile, const std::string& outputFi
     fin.seekg(0, std::ios::beg);
 
     std::vector<int> compressed(fileSize / sizeof(int));
-    fin.read(reinterpret_cast<char*>(&compressed[0]), fileSize); // Read compressed data
+    fin.read(reinterpret_cast<char*>(&compressed[0]), fileSize); 
 
-    std::string decoded = decodingLZW(compressed); // Decode compressed data
+    std::string decoded = decodingLZW(compressed); 
 
-    fout.write(decoded.c_str(), decoded.size()); // Write decoded data to output file
+    fout.write(decoded.c_str(), decoded.size()); 
 
     fin.close();
     fout.close();
@@ -165,13 +165,13 @@ void compressFileRLE(const std::string& inputFile, const std::string& outputFile
     
     std::ifstream inFile(inputFile);
     if(!inFile){
-        std::cerr << "Error: unable to inputen input file" << std::endl;
+        std::cerr << "Error: unable to access input file" << std::endl;
         return;
     }
 
     std::ofstream outFile(outputFile);
     if(!outFile){
-        std::cerr << "Error: unable to inputen output file" << std::endl;
+        std::cerr << "Error: unable to access output file" << std::endl;
         return;
     }
 
@@ -188,13 +188,13 @@ void compressFileRLE(const std::string& inputFile, const std::string& outputFile
 void decompressFileRLE(const std::string& inputFile, const std::string& outputFile){
     std::ifstream inFile(inputFile);
     if(!inFile){
-        std::cerr << "Error: unable to inputen input file" << std::endl;
+        std::cerr << "Error: unable to access input file" << std::endl;
         return;
     }
 
     std::ofstream outFile(outputFile);
     if(!outFile){
-        std::cerr << "Error: unable to inputen output file" << std::endl;
+        std::cerr << "Error: unable to access output file" << std::endl;
         return;
     }
 
