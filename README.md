@@ -13,13 +13,13 @@ Mode 2 : Compress the input file using Run Length Encoding.
 Mode 3 : Decompress the input file using Run Length Encoding.
 ## Example:
 Executing the file:
-![alt text](firstExecution.png)
+<a  target="blank"><img align="center" src="\images\firstExecution.png" height="100" /></a>
 Mode 0 : 
-![alt text](<mode 0.png>)
+<a  target="blank"><img align="center" src="\images\mode0.png" height="100" /></a>
 Mode 1 : 
-![alt text](<mode 1.png>)
+<a  target="blank"><img align="center" src="\images\mode1.png" height="100" /></a>
 Mode 2 :
-![alt text](<mode 2.png>)
+<a  target="blank"><img align="center" src="\images\mode2.png" height="100" /></a>
 Mode 3 : 
-![alt text](<mode 3.png>)
+<a  target="blank"><img align="center" src="\images\mode3.png" height="100" /></a>
 
