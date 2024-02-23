@@ -4,21 +4,19 @@
 #include <string>
 #include <fstream>
 
-using namespace std;
-
 const int dictionarySize = 256;
 
-vector<int> dictionaryCoderCompress(const string& data) {
-  unordered_map<string, int> dictionary;
-  vector<int> compressed;
+std::vector<int> dictionaryCoderCompress(const std::string& data) {
+  std::unordered_map<std::string, int> dictionary;
+  std::vector<int> compressed;
   
   for (int i = 0; i < dictionarySize; ++i) {
-    dictionary[string(1, i)] = i + 1;
+    dictionary[std::string(1, i)] = i + 1;
   }
 
-  string current;
+  std::string current;
   for (char c : data) {
-    string nextSequence = current + c;
+    std::string nextSequence = current + c;
     if (dictionary.find(nextSequence) != dictionary.end()) {
       current = nextSequence;
     } else {
@@ -33,25 +31,25 @@ vector<int> dictionaryCoderCompress(const string& data) {
   return compressed;
 }
 
-string dictionaryCoderDecompress(const vector<int>& data){
-  unordered_map<int, string> dictionary;
-  string decompressed;
+std::string dictionaryCoderDecompress(const std::vector<int>& data){
+  std::unordered_map<int, std::string> dictionary;
+  std::string decompressed;
 
   for(int i = 0; i < dictionarySize; ++i){
-    dictionary[i + 1] = string(1, i);
+    dictionary[i + 1] = std::string(1, i);
   }
 
   int prev = data[0];
   decompressed = dictionary[prev];
   for(size_t i = 1; i < data.size(); ++i){
     int code = data[i];
-    string entry;
+    std::string entry;
     if(dictionary.find(code) != dictionary.end()){
       entry = dictionary[code];
     } else if (code == dictionary.size() + 1){
       entry = dictionary[prev] + dictionary[prev][0];
     } else {
-            throw logic_error("Compression Error");
+            throw std::logic_error("Compression Error");
     }
     decompressed += entry;
     dictionary[dictionary.size() + 1] = dictionary[prev] + entry[0];
@@ -60,23 +58,23 @@ string dictionaryCoderDecompress(const vector<int>& data){
   return decompressed;
 }
 
-void compressFileDictionaryCoder(const string& inputFile, const string& outputFile){
+void compressFileDictionaryCoder(const std::string& inputFile, const std::string& outputFile){
   
-  ifstream inFile(inputFile, ios::binary);
+  std::ifstream inFile(inputFile, std::ios::binary);
   if(!inFile){
-    cerr << "Error: unable to open input file" << endl;
+    std::cerr << "Error: unable to open input file" << std::endl;
     return;
   }
 
-  string data((istreambuf_iterator<char>(inFile)), istreambuf_iterator<char>());
+  std::string data((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
 
   inFile.close();
 
-  vector<int> compressedData = dictionaryCoderCompress(data);
+  std::vector<int> compressedData = dictionaryCoderCompress(data);
 
-  ofstream outFile(outputFile, ios::binary);
+  std::ofstream outFile(outputFile, std::ios::binary);
   if(!outFile){
-    cerr << "Error: unable to open output file" << endl;
+    std::cerr << "Error: unable to open output file" << std::endl;
     return;
   }
 
@@ -87,30 +85,30 @@ void compressFileDictionaryCoder(const string& inputFile, const string& outputFi
 
   outFile.close();
 
-  cout << "File compressed successfully." << endl;
+  std::cout << "File compressed successfully." << std::endl;
 
 }
 
-void decompressFileDictionaryCoder(const string& inputFile, const string& outputFile){
-  ifstream inFile(inputFile, ios::binary);
+void decompressFileDictionaryCoder(const std::string& inputFile, const std::string& outputFile){
+  std::ifstream inFile(inputFile, std::ios::binary);
   if(!inFile){
-    cerr << "Error: unable to open input file" << endl;
+    std::cerr << "Error: unable to open input file" << std::endl;
     return;
   }
 
   size_t dataSize;
   inFile.read(reinterpret_cast<char*>(&dataSize), sizeof(dataSize));
 
-  vector<int> compressedData(dataSize);
+  std::vector<int> compressedData(dataSize);
   inFile.read(reinterpret_cast<char*>(compressedData.data()), dataSize * sizeof(int));
 
   inFile.close();
 
-  string decompressedData = dictionaryCoderDecompress(compressedData);
+  std::string decompressedData = dictionaryCoderDecompress(compressedData);
 
-  ofstream outFile(outputFile, ios::binary);
+  std::ofstream outFile(outputFile, std::ios::binary);
   if(!outFile){
-    cerr << "Error: unable to open output file" << endl;
+    std::cerr << "Error: unable to open output file" << std::endl;
     return;
   }
 
@@ -118,6 +116,6 @@ void decompressFileDictionaryCoder(const string& inputFile, const string& output
 
   outFile.close();
 
-  cout << "File decompressed successfully." << endl;
+  std::cout << "File decompressed successfully." << std::endl;
 }
 

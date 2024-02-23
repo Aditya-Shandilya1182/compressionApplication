@@ -2,25 +2,25 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std;
+//using namespace std;
 
-string rleCompress(const string& data){
-    string encoded;
+std::string rleCompress(const std::string& data){
+    std::string encoded;
     int count = 1;
     for(size_t i = 1; i < data.size(); ++i){
         if(data[i] == data[i - 1]){
             ++count;
         } else {
-            encoded += data[i - 1] + to_string(count);
+            encoded += data[i - 1] + std::to_string(count);
             count = 1;
         }
     }
-    encoded += data[data.size() - 1] + to_string(count);
+    encoded += data[data.size() - 1] + std::to_string(count);
     return encoded;
 }
 
-string rleDecompress(const string& data){
-    string decoded;
+std::string rleDecompress(const std::string& data){
+    std::string decoded;
     for(size_t i = 0; i < data.size(); i += 2){
         int count = data[i + 1] - '0';
         for(int j = 0; j < count; ++j){
@@ -30,51 +30,51 @@ string rleDecompress(const string& data){
     return decoded;
 }
 
-void compressFileRLE(const string& inputFile, const string& outputFile){
+void compressFileRLE(const std::string& inputFile, const std::string& outputFile){
     
-    ifstream inFile(inputFile);
+    std::ifstream inFile(inputFile);
     if(!inFile){
-        cerr << "Error: unable to open input file" << endl;
+        std::cerr << "Error: unable to open input file" << std::endl;
         return;
     }
 
-    ofstream outFile(outputFile);
+    std::ofstream outFile(outputFile);
     if(!outFile){
-        cerr << "Error: unable to open output file" << endl;
+        std::cerr << "Error: unable to open output file" << std::endl;
         return;
     }
 
-    string content((istreambuf_iterator<char>(inFile)), istreambuf_iterator<char>());
-    string compressed = rleCompress(content);
+    std::string content((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
+    std::string compressed = rleCompress(content);
     outFile << compressed;
 
     inFile.close();
     outFile.close();
 
-    cout << "File compressed successfully." << endl;
+    std::cout << "File compressed successfully." << std::endl;
 }
 
-void decompressFileRLE(const string& inputFile, const string& outputFile){
-    ifstream inFile(inputFile);
+void decompressFileRLE(const std::string& inputFile, const std::string& outputFile){
+    std::ifstream inFile(inputFile);
     if(!inFile){
-        cerr << "Error: unable to open input file" << endl;
+        std::cerr << "Error: unable to open input file" << std::endl;
         return;
     }
 
-    ofstream outFile(outputFile);
+    std::ofstream outFile(outputFile);
     if(!outFile){
-        cerr << "Error: unable to open output file" << endl;
+        std::cerr << "Error: unable to open output file" << std::endl;
         return;
     }
 
-    string content((istreambuf_iterator<char>(inFile)), istreambuf_iterator<char>());
-    string decompressed = rleDecompress(content);
+    std::string content((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
+    std::string decompressed = rleDecompress(content);
     outFile << decompressed;
 
     inFile.close();
     outFile.close();
 
-    cout << "File decompressed successfully." << endl;
+    std::cout << "File decompressed successfully." << std::endl;
 }
 
 
