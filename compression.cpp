@@ -38,6 +38,10 @@ std::vector<int> encodingLZW(const std::string& input) {
 }
 
 std::string decodingLZW(const std::vector<int>& input) {
+    if (input.empty()) {
+        return ""; // Return an empty string if the input vector is empty
+    }
+
     std::unordered_map<int, std::string> table;
     for (int i = 0; i <= 255; i++) {
         std::string ch = "";
@@ -49,7 +53,7 @@ std::string decodingLZW(const std::vector<int>& input) {
     std::string s = table[old];
     std::string c = "";
     c += s[0];
-    std::string decoded = s; 
+    std::string decoded = s;
     int count = 256;
     for (int i = 0; i < input.size() - 1; i++) {
         n = input[i + 1];
@@ -59,13 +63,14 @@ std::string decodingLZW(const std::vector<int>& input) {
         } else {
             entry = table[n];
         }
-        decoded += entry; 
+        decoded += entry;
         c = entry[0];
         table[count++] = table[old] + c;
         old = n;
     }
     return decoded;
 }
+
 
 void compressFileLZW(const std::string& inputFile, const std::string& outputFile) {
     std::ifstream fin(inputFile, std::ios::binary);
@@ -134,23 +139,20 @@ std::string rleDecompress(const std::string& data) {
     std::string decoded;
     size_t i = 0;
     while (i < data.size()) {
-        // Normal alpha characters
         while (alpha_or_space(data[i])) {
             decoded += data[i++];
-            if (i == data.size()) // Check if end of string is reached
+            if (i == data.size()) 
                 break;
         }
 
-        // Repeat number
         int repeat = 0;
         while (std::isdigit(data[i])) {
             repeat = 10 * repeat + (data[i++] - '0');
-            if (i == data.size()) // Check if end of string is reached
+            if (i == data.size()) 
                 break;
         }
 
-        // Unroll repeat characters
-        if (i < data.size()) { // Ensure there are characters left in the string
+        if (i < data.size()) { 
             char char_to_unroll = data[i++];
             for (int j = 0; j < repeat; ++j)
                 decoded += char_to_unroll;
