@@ -9,31 +9,31 @@
 //LZW Compression
 std::vector<int> encodingLZW(const std::string& input) {
     std::unordered_map<std::string, int> table;
-    for (int i = 0; i <= 255; i++) {
+    for (size_t i = 0; i <= 255; i++) {
         std::string ch = "";
         ch += char(i);
         table[ch] = i;
     }
 
-    std::string p = "", c = "";
-    p += input[0];
-    int code = 256;
+    std::string prefix = "", suffix = "";
+    prefix += input[0];
+    size_t code = 256;
     std::vector<int> output_code;
 
-    for (int i = 0; i < input.length(); i++) {
+    for (size_t i = 0; i < input.length(); i++) {
         if (i != input.length() - 1)
-            c += input[i + 1];
-        if (table.find(p + c) != table.end()) {
-            p = p + c;
+            suffix += input[i + 1];
+        if (table.find(prefix + suffix) != table.end()) {
+            prefix = prefix + suffix;
         } else {
-            output_code.push_back(table[p]);
-            table[p + c] = code;
+            output_code.push_back(table[prefix]);
+            table[prefix + suffix] = code;
             code++;
-            p = c;
+            prefix = suffix;
         }
-        c = "";
+        suffix = "";
     }
-    output_code.push_back(table[p]);
+    output_code.push_back(table[prefix]);
     return output_code;
 }
 
@@ -43,30 +43,30 @@ std::string decodingLZW(const std::vector<int>& input) {
     }
 
     std::unordered_map<int, std::string> table;
-    for (int i = 0; i <= 255; i++) {
+    for (size_t i = 0; i <= 255; i++) {
         std::string ch = "";
         ch += char(i);
         table[i] = ch;
     }
 
-    int old = input[0], n;
-    std::string s = table[old];
-    std::string c = "";
-    c += s[0];
-    std::string decoded = s;
-    int count = 256;
-    for (int i = 0; i < input.size() - 1; i++) {
-        n = input[i + 1];
+    int old_code = input[0], new_code;
+    std::string sequence = table[old_code];
+    std::string suffix = "";
+    suffix += sequence[0];
+    std::string decoded = sequence;
+    size_t count = 256;
+    for (size_t i = 0; i < input.size() - 1; i++) {
+        new_code = input[i + 1];
         std::string entry;
-        if (table.find(n) == table.end()) {
-            entry = table[old] + c;
+        if (table.find(new_code) == table.end()) {
+            entry = table[old_code] + suffix;
         } else {
-            entry = table[n];
+            entry = table[new_code];
         }
         decoded += entry;
-        c = entry[0];
-        table[count++] = table[old] + c;
-        old = n;
+        suffix = entry[0];
+        table[count++] = table[old_code] + suffix;
+        old_code = new_code;
     }
     return decoded;
 }
