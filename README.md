@@ -11,17 +11,5 @@ Mode 0 : Compress the input file using LZW Compression Algorithm.<br>
 Mode 1 : Decompress the input file using LZW Decompression Algorithm.<br>
 Mode 2 : Compress the input file using Run Length Encoding.<br>
 Mode 3 : Decompress the input file using Run Length Encoding.<br>
-## Example:
-Executing the file:<br><br>
-<a  target="blank"><img align="center" src="\images\firstExecution.png" width="800" height="70" /></a><br><br>
-Mode 0 : <br><br>
-<a  target="blank"><img align="center" src="\images\mode0.png" width="800" height="90" /></a><br><br>
-Mode 1 : <br><br>
-<a  target="blank"><img align="center" src="\images\mode1.png" width="800" height="70" /></a><br><br>
-Mode 2 :<br><br>
-<a  target="blank"><img align="center" src="\images\mode2.png" width="800" height="90" /></a><br><br>
-Mode 3 : <br><br>
-<a  target="blank"><img align="center" src="\images\mode3.png" width="800" height="70" /></a><br><br>
 
-## For Test:
-"input.txt" file is provided to perform tests. For storing compressed data "compressed.txt" is provided and for storing decompressed data "decompressed.txt" is provided.
+
